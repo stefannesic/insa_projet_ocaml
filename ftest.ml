@@ -19,11 +19,11 @@ let () =
   (* Open file *)
   let graph = Gfile.from_file infile in
 
-  let graph = map graph (fun x -> string_of_int ((int_of_string x) + 1)) in
+  (*let graph = map graph (fun x -> string_of_int ((int_of_string x) + 1)) in*)
 
   (* Rewrite the graph that has been read. *)
-  let () = Gfile.write_file outfile graph in
-
+  (*let () = Gfile.write_file outfile graph in*)
+  let () = Gfile.export outfile graph in 
   ()
 
 
