@@ -1,4 +1,5 @@
 open Graph
+open Ford_fulkerson
 
 let () =
 
@@ -9,7 +10,7 @@ let () =
     end ;
 
   let infile = Sys.argv.(1)
-  and outfile = Sys.argv.(4)
+  (*and outfile = Sys.argv.(4)*)
   
   (* These command-line arguments are not used for the moment. *)
   and _source = Sys.argv.(2)
@@ -19,11 +20,18 @@ let () =
   (* Open file *)
   let graph = Gfile.from_file infile in
 
-  (*let graph = map graph (fun x -> string_of_int ((int_of_string x) + 1)) in*)
+  let graph = map graph (fun x -> (int_of_string x)) in
 
   (* Rewrite the graph that has been read. *)
   (*let () = Gfile.write_file outfile graph in*)
-  let () = Gfile.export outfile graph in 
-  ()
+  (*let () = Gfile.export outfile graph in*)
+
+  let chemin = chemin_augmentant graph "0" "5"
+  in
+  let rec print_list = function 
+    | [] -> ()
+    | (a,b)::l -> Printf.printf "elem is x = %s" a; print_list l
+  in
+  print_list chemin;;
 
 

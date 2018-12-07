@@ -1,2 +1,6 @@
 *.cmi
 *.cmo
+ftest.byte
+ftest.native
+*.png
+_build/

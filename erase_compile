@@ -1,0 +1,2 @@
+rm -f *.cmi *.cmo ftest
+ocamlbuild ftest.byte
