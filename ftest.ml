@@ -28,10 +28,7 @@ let () =
 
   let chemin = chemin_augmentant graph "0" "5"
   in
-  let rec print_list = function 
-    | [] -> ()
-    | (a,b)::l -> Printf.printf "elem is x = %s" a; print_list l
-  in
-  print_list chemin;;
+  print_chemin chemin;
+  Printf.printf "Min value is %d\n" (augmente_chemin chemin);;
 
 
