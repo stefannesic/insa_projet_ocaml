@@ -10,7 +10,7 @@ let () =
     end ;
 
   let infile = Sys.argv.(1)
-  (*and outfile = Sys.argv.(4)*)
+  and outfile = Sys.argv.(4)
   
   (* These command-line arguments are not used for the moment. *)
   and _source = Sys.argv.(2)
@@ -20,15 +20,18 @@ let () =
   (* Open file *)
   let graph = Gfile.from_file infile in
 
-  let graph = map graph (fun x -> (int_of_string x)) in
+  let aug_graph = map graph (fun x -> (int_of_string x)) in
+  let aug_graph = arc_augmente aug_graph "4" "5" 3 in
+  let aug_graph = map aug_graph (fun x -> (string_of_int x)) in 
 
   (* Rewrite the graph that has been read. *)
-  (*let () = Gfile.write_file outfile graph in*)
-  (*let () = Gfile.export outfile graph in*)
+  let () = Gfile.write_file outfile aug_graph in
+  let () = Gfile.export outfile aug_graph in
+  ()
 
-  let chemin = chemin_augmentant graph "0" "5"
+  (*let chemin = chemin_augmentant graph "0" "5"
   in
   print_chemin chemin;
-  Printf.printf "Min value is %d\n" (augmente_chemin chemin);;
+  Printf.printf "Min value is %d\n" (val_chemin chemin);;*)
 
 

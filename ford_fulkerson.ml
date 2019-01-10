@@ -1,5 +1,6 @@
 open Graph
 
+(* trouve un chemin augmentant un graphe *)
 let chemin_augmentant gr s p = let rec trouve_chemin chemin arcs =
                                  match arcs with
                                  |[] -> []
@@ -12,18 +13,46 @@ let chemin_augmentant gr s p = let rec trouve_chemin chemin arcs =
                                                         else c)
                                in List.rev (trouve_chemin [(s, max_int)] (out_arcs gr s));;
 
-let rec min_augmente_chemin = function
+(* fonction auxiliare de augmente_chemin *)
+let rec val_min_chemin = function
   |[] -> max_int
-  |(id,x)::rest -> min x (min_augmente_chemin rest);;
+  |(id,x)::rest -> min x (val_min_chemin rest);;
 
-let augmente_chemin chemin = if chemin == [] then 0
-                             else min_augmente_chemin chemin;;
-
+(* calcul la valeur minimale d'un chemin *)
+let val_chemin chemin = if chemin == [] then 0
+                             else val_min_chemin chemin;;
+(* affiche le chemin *)
 let rec print_chemin = function 
   | [] -> ()
   | [(a,b)] -> Printf.printf "(%s) \n" a;
   | (a,b)::l -> Printf.printf "(%s)->" a; print_chemin l;;
 
+(* ford fulkerson algorithm *)
+(* while not path_not_found *)
+(* find augmenting path *)
+(* calculate residual graph based on value of said path *)
 
+let get_arc_value = function
+  |None -> 0
+  |Some n -> n
+
+let rec arc_augmente g node1 node2 valeur = let arc_val_f = find_arc g node1 node2 in
+                                            let arc_val_b = find_arc g node2 node1 in
+                                            match arc_val_f with
+                                            |Some avf -> (let avb = (get_arc_value arc_val_b) in
+                                                          (if (avf - valeur) = 0 then add_arc g node2 node1 (avb + valeur) (* only add back arc *)
+                                                           else add_arc (add_arc g node1 node2 (avf - valeur)) node2 node1 (avb + valeur)))
+                                            |None -> g;;
+
+(*let rec graphe_augmente g ch valeur = 
+                                      match ch with
+                                      |[] -> g
+                                      |[(id,x)] -> g
+                                      |(id1, x1)::(id2, x2)::chemin -> let nouv_graphe = arc_augmente g id1 id2 valeur  in
+                                                                       graphe_augmente nouv_graphe (id2, x2)::chemin;;*)
+(* let rec ford_fulkerson gr s p = let next_path = chemin_augmentant gr s p in
+                            match next_path with
+                            |[] -> (* flow value of gr *)
+                            |_ -> ford_fulkerson (graphe_augmente (val_chemin next_path)) s p;; *)
 
 
