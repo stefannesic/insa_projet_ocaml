@@ -22,6 +22,10 @@ val add_node: 'a graph -> id -> 'a graph
  * @raise Graph_error if id1 or id2 does not exist in the graph. *)
 val add_arc: 'a graph -> id -> id -> 'a -> 'a graph
 
+(* del_arc gr id1 id2 : deletes an arc from node id1 to node id2
+ * @raise Graph_error if id1 or id2 does not exist in the graph. *)
+val del_arc: 'a graph -> id -> id -> 'a graph
+
 
 (**************  GETTERS  *****************)
 

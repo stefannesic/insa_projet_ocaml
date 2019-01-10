@@ -20,14 +20,20 @@ let () =
   (* Open file *)
   let graph = Gfile.from_file infile in
 
-  let aug_graph = map graph (fun x -> (int_of_string x)) in
+  (*let aug_graph = map graph (fun x -> (int_of_string x)) in
   let aug_graph = arc_augmente aug_graph "4" "5" 3 in
-  let aug_graph = map aug_graph (fun x -> (string_of_int x)) in 
+  let aug_graph = map aug_graph (fun x -> (string_of_int x)) in*)
+	
+	let graph = map graph (fun x -> (int_of_string x)) in
+	let ch = chemin_augmentant graph _source _sink in  
+	let aug_graph = graphe_augmente graph ch (val_chemin ch) in  
+	let aug_graph = map aug_graph (fun x -> (string_of_int x)) in
 
   (* Rewrite the graph that has been read. *)
   let () = Gfile.write_file outfile aug_graph in
   let () = Gfile.export outfile aug_graph in
   ()
+
 
   (*let chemin = chemin_augmentant graph "0" "5"
   in

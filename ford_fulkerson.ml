@@ -40,16 +40,16 @@ let rec arc_augmente g node1 node2 valeur = let arc_val_f = find_arc g node1 nod
                                             let arc_val_b = find_arc g node2 node1 in
                                             match arc_val_f with
                                             |Some avf -> (let avb = (get_arc_value arc_val_b) in
-                                                          (if (avf - valeur) = 0 then add_arc g node2 node1 (avb + valeur) (* only add back arc *)
+                                                          (if (avf - valeur) = 0 then add_arc (del_arc g node1 node2) node2 node1 (avb + valeur) (* only add back arc and delete forward arc *)
                                                            else add_arc (add_arc g node1 node2 (avf - valeur)) node2 node1 (avb + valeur)))
                                             |None -> g;;
 
-(*let rec graphe_augmente g ch valeur = 
+let rec graphe_augmente g ch valeur = 
                                       match ch with
                                       |[] -> g
                                       |[(id,x)] -> g
-                                      |(id1, x1)::(id2, x2)::chemin -> let nouv_graphe = arc_augmente g id1 id2 valeur  in
-                                                                       graphe_augmente nouv_graphe (id2, x2)::chemin;;*)
+                                      |(id1, x1)::(id2, x2)::chemin -> let nouv_graphe = (arc_augmente g id1 id2 valeur)  in
+                                                                       graphe_augmente nouv_graphe ((id2, x2)::chemin) valeur;;
 (* let rec ford_fulkerson gr s p = let next_path = chemin_augmentant gr s p in
                             match next_path with
                             |[] -> (* flow value of gr *)
