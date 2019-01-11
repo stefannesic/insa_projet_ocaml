@@ -1,22 +1,14 @@
-Readme
 
-## Pour compiler
+Pour compiler
 ./erase_compile pour compiler plus facilement
 
-##
 Pour tester:   On a ajouté un paramètre de plus pour afficher le graphe d'origine pour faciliter la comparaison
 Comme ./ftest.byte test_graphs/graph1 0 5 graph1_raw graph1_modif
 
-
-##
 Pour la partie “Medium project”
 1)  On a trouvé une application  pour implémenter notre algorithme, c’est Maximum Bipartite Matching. Comme on M canditats pour N postes, un candidat est qualifié juste pour un poste, et toutes les postes peut juste accepter un candidat. Donc si chaque canditat postule pour plusieurs postes, il y aura plusieurs possiblités de recrutement, mais on essaye de trouver une solution la plus optimale pour assurer que le plus de canditats soient pris.
 2) Pour l’implémenter, on devrait ajouter la source et le puits
 
 On a 3 canditats et 5 postes. Le fichier de test est  test_graphs/test_Bipartie
 
-
-
-
-##
 Les fichiers de tests sont dans le dossier test_graphs
