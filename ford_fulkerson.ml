@@ -55,11 +55,38 @@ let rec graphe_augmente g ch valeur = match ch with
 let rec graphe_flow gr s = v_fold gr (fun acu id out_arcs -> let v = get_arc_value (find_arc gr id s) in if v != 0 then acu+v else acu) 0;; 
 
 
+(* converts residual graph into final graph  *)
+let gen_graphe_finale g1 g2 = (* goes over each out arc of a certain node id_gr1 of a graph and generates new graph with arcs like "3/8" for final graph presentation*)
+  let rec graphe_finale_pour_noeud gr_finale id_gr1 gr2 = 
+    function
+    |[] -> gr_finale
+    |(id, lbl)::rest -> let arc_value = get_arc_value (find_arc gr2 id id_gr1) (* value of flow of arc *) in
+                        let graphe_avec_noeuds = if ((node_exists gr_finale id) = false) then (add_node gr_finale id) else gr_finale (* add id node to graph *)in
+                        if (arc_value = 0)(*no back arcs*) then
+                          let new_graphe =
+                            (* add arc 0/lbl*)
+                            (add_arc graphe_avec_noeuds id_gr1 id ("0/"^(string_of_int lbl)))
+                          in (graphe_finale_pour_noeud new_graphe id_gr1 gr2 rest)
+                        else  let new_graphe =
+                                (* add arc arc_value/lbl*)
+                                (add_arc graphe_avec_noeuds id_gr1 id ((string_of_int arc_value)^"/"^(string_of_int lbl)))
+                              in (graphe_finale_pour_noeud new_graphe id_gr1 gr2 rest) in
+  v_fold g1 (fun initial_graph id oa -> (*add current node if not exists *)
+      let initial_graph = if (node_exists initial_graph id) = false then (add_node initial_graph id)
+                                                            else initial_graph in
+                                        graphe_finale_pour_noeud initial_graph id g2 oa) empty_graph;;
+
 let ford_fulkerson graphe source puits = let false_flow = (graphe_flow graphe source) in                            
                             let rec ford_fulkerson_aux gr s p = let next_path = chemin_augmentant gr s p in
                                                                 match next_path with
-                                                                |[] -> (gr, (graphe_flow gr s) - false_flow) 
+                                                                |[] -> ((gen_graphe_finale graphe gr), (graphe_flow gr s) - false_flow) 
                                                                 |_ -> ford_fulkerson_aux (graphe_augmente gr next_path (val_chemin next_path)) s p
-                            in ford_fulkerson_aux graphe source puits;; 
+                            in ford_fulkerson_aux graphe source puits;;
+
+
+  
+
+
+
 
 

@@ -26,7 +26,6 @@ let () =
 	
   let graph = map graph (fun x -> (int_of_string x)) in
   let (gr, soln) = ford_fulkerson graph _source _sink in  
-  let gr = map gr (fun x -> (string_of_int x)) in
 
   (* Rewrite the graph that has been read. *)
   let () = Gfile.write_file outfile gr in
