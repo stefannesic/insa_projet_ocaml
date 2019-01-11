@@ -35,7 +35,7 @@ let rec print_chemin = function
 let get_arc_value = function
   |None -> 0
   |Some n -> n
-
+               
 let rec arc_augmente g node1 node2 valeur = let arc_val_f = find_arc g node1 node2 in
                                             let arc_val_b = find_arc g node2 node1 in
                                             match arc_val_f with
@@ -44,15 +44,20 @@ let rec arc_augmente g node1 node2 valeur = let arc_val_f = find_arc g node1 nod
                                                            else add_arc (add_arc g node1 node2 (avf - valeur)) node2 node1 (avb + valeur)))
                                             |None -> g;;
 
-let rec graphe_augmente g ch valeur = 
-                                      match ch with
+let rec graphe_augmente g ch valeur = match ch with
                                       |[] -> g
                                       |[(id,x)] -> g
                                       |(id1, x1)::(id2, x2)::chemin -> let nouv_graphe = (arc_augmente g id1 id2 valeur)  in
                                                                        graphe_augmente nouv_graphe ((id2, x2)::chemin) valeur;;
-(* let rec ford_fulkerson gr s p = let next_path = chemin_augmentant gr s p in
+
+
+(* calculate the sum of the out_arc labels that go to the sink*)
+let rec graphe_flow gr s = v_fold gr (fun acu id out_arcs -> let v = get_arc_value (find_arc gr id s) in if v != 0 then acu+v else acu) 0;; 
+
+
+let rec ford_fulkerson gr s p = let next_path = chemin_augmentant gr s p in
                             match next_path with
-                            |[] -> (* flow value of gr *)
-                            |_ -> ford_fulkerson (graphe_augmente (val_chemin next_path)) s p;; *)
+                            |[] -> (gr, graphe_flow gr s)
+                            |_ -> ford_fulkerson (graphe_augmente gr next_path (val_chemin next_path)) s p;; 
 
 

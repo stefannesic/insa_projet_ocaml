@@ -24,15 +24,14 @@ let () =
   let aug_graph = arc_augmente aug_graph "4" "5" 3 in
   let aug_graph = map aug_graph (fun x -> (string_of_int x)) in*)
 	
-	let graph = map graph (fun x -> (int_of_string x)) in
-	let ch = chemin_augmentant graph _source _sink in  
-	let aug_graph = graphe_augmente graph ch (val_chemin ch) in  
-	let aug_graph = map aug_graph (fun x -> (string_of_int x)) in
+  let graph = map graph (fun x -> (int_of_string x)) in
+  let (gr, soln) = ford_fulkerson graph _source _sink in  
+  let gr = map gr (fun x -> (string_of_int x)) in
 
   (* Rewrite the graph that has been read. *)
-  let () = Gfile.write_file outfile aug_graph in
-  let () = Gfile.export outfile aug_graph in
-  ()
+  let () = Gfile.write_file outfile gr in
+  let () = Gfile.export outfile gr in
+  Printf.printf "Value of flow is %d\n" soln;;
 
 
   (*let chemin = chemin_augmentant graph "0" "5"
