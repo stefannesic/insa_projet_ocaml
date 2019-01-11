@@ -55,9 +55,11 @@ let rec graphe_augmente g ch valeur = match ch with
 let rec graphe_flow gr s = v_fold gr (fun acu id out_arcs -> let v = get_arc_value (find_arc gr id s) in if v != 0 then acu+v else acu) 0;; 
 
 
-let rec ford_fulkerson gr s p = let next_path = chemin_augmentant gr s p in
-                            match next_path with
-                            |[] -> (gr, graphe_flow gr s)
-                            |_ -> ford_fulkerson (graphe_augmente gr next_path (val_chemin next_path)) s p;; 
+let ford_fulkerson graphe source puits = let false_flow = (graphe_flow graphe source) in                            
+                            let rec ford_fulkerson_aux gr s p = let next_path = chemin_augmentant gr s p in
+                                                                match next_path with
+                                                                |[] -> (gr, (graphe_flow gr s) - false_flow) 
+                                                                |_ -> ford_fulkerson_aux (graphe_augmente gr next_path (val_chemin next_path)) s p
+                            in ford_fulkerson_aux graphe source puits;; 
 
 
