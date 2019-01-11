@@ -37,6 +37,7 @@ let add_arc gr id1 id2 lbl =
   let gr2 = List.remove_assoc id1 gr in
   (id1, outb) :: gr2
 
+(* delete arc between node id1 and id2 in graph gr *)
 let del_arc gr id1 id2 = 
   (* Existing out-arcs *)
   let outa = out_arcs gr id1 in
