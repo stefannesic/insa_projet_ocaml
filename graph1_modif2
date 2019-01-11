@@ -1,0 +1,10 @@
+digraph finite_state_machine {
+	rankdir=LR; 
+	size="8,5"
+	node [shape = circle]; 
+	5 -> 3 [ label = "12" ]; 
+	3 -> 5 [ label = "8" ]; 
+	3 -> 1 [ label = "12" ]; 
+	1 -> 0 [ label = "12" ]; 
+	0 -> 1 [ label = "4" ]; 
+}

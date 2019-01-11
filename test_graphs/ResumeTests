@@ -1,0 +1,13 @@
+Pour tester:   On a ajouté un paramètre de plus pour afficher le graphe d'origine pour faciliter la comparaison
+Comme ./ftest.byte test_graphs/graph1 0 5 graph1_raw graph1_modif
+
+
+La liste des résultats de test:
+
+1.graph1      	Max_Flot: 23	Resultat attendu: 23
+2.test_sanssycle  Max_Flot: 12
+3.test_cycle      Max_FLot: 10
+4.test_unitaire1  Max_Flot: 50
+5.test_unitaire2    Max_Flot: 9      Resultat attendu: 9   SIte:  https://www.irif.fr/~asarin/P7/Algo/corrigeexamalgo2011.pdf?fbclid=IwAR2qTbKZbd209CvRjzPLoRgv8ya4ehkFvciQugplhYPynLVDOlXPNI8XAck
+6.test_Bipartie   Max_Flot: 2      3 candidats pour 5 postes, au total il n'y a que deux sont pris.
+

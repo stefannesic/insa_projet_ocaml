@@ -3,14 +3,15 @@ open Ford_fulkerson
 
 let () =
 
-  if Array.length Sys.argv <> 5 then
+  if Array.length Sys.argv <> 6 then
     begin
-      Printf.printf "\nUsage: %s infile source sink outfile\n\n%!" Sys.argv.(0) ;
+      Printf.printf "\nUsage: %s infile source sink printRaw outfile\n\n%!" Sys.argv.(0) ;
       exit 0
     end ;
-
+  (* Outfile is the graph raw, and the Outfile2 is graph after the algo*)
   let infile = Sys.argv.(1)
-  and outfile = Sys.argv.(4)
+  and printinfile = Sys.argv.(4)
+  and outfile = Sys.argv.(5)
   
   (* These command-line arguments are not used for the moment. *)
   and _source = Sys.argv.(2)
@@ -20,9 +21,9 @@ let () =
   (* Open file *)
   let graph = Gfile.from_file infile in
 
-  (*let aug_graph = map graph (fun x -> (int_of_string x)) in
-  let aug_graph = arc_augmente aug_graph "4" "5" 3 in
-  let aug_graph = map aug_graph (fun x -> (string_of_int x)) in*)
+  (* Just print the raw graph that has been read.*)
+  let () = Gfile.write_file printinfile graph in
+  let () = Gfile.export printinfile graph in
 	
   let graph = map graph (fun x -> (int_of_string x)) in
   let (gr, soln) = ford_fulkerson graph _source _sink in  
@@ -31,11 +32,5 @@ let () =
   let () = Gfile.write_file outfile gr in
   let () = Gfile.export outfile gr in
   Printf.printf "Value of flow is %d\n" soln;;
-
-
-  (*let chemin = chemin_augmentant graph "0" "5"
-  in
-  print_chemin chemin;
-  Printf.printf "Min value is %d\n" (val_chemin chemin);;*)
 
 
